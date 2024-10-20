@@ -1,10 +1,12 @@
 const express = require('express');
+const cors = require('cors');
 const certificationRoutes = require('./routes/certificationRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-//Middleware body parsing
+//Middleware
+app.use(cors());
 app.use(express.json());
 
 //List endpoint
