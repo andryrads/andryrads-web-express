@@ -1,16 +1,16 @@
-const mongoose = require('mongoose');
+const { MongoClient } = require('mongodb');
+const uri = "mongodb+srv://andryrads:root7mongodbA%21@andryrads-web-cluster.lxkuc.mongodb.net/?retryWrites=true&w=majority";
 
-const connectDB = async () => {
+async function connectDB() {
     try {
-        await mongoose.connect('mongosh "mongodb+srv://andryrads-web-cluster.lxkuc.mongodb.net/" --apiVersion 1 --username andryrads', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-        console.log('MongoDB connected successfully');
+        client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+        await client.connect();
+        console.log("Connected to MongoDB");
     } catch (error) {
-        console.error('MongoDB connection error:', error);
-        process.exit(1);
+        console.error("Error connecting to MongoDB:", error.message);
+        throw error;
     }
-};
+    return client;
+}
 
 module.exports = connectDB;
